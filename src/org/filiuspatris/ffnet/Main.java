@@ -1,4 +1,4 @@
-package test.filiuspatris.ffnet;
+package org.filiuspatris.ffnet;
 
 import java.util.function.DoubleFunction;
 

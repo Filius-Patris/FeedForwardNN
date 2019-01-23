@@ -4,20 +4,28 @@ import java.util.function.DoubleFunction;
 
 public class Perceptron {
 	
-	private double w1, w2, b;
+	public double w1, w2, b;
 	public double getw1() { return w1; }
 	public double getw2() { return w2; }
 	public double getb() { return b; }
 
+	public double i1, i2, o, a;
+
+	public double dadw1, dadw2, dadb;
+
+	public double dado, dodw1, dodw2, dodb;
+
 	public static final DoubleFunction<Double> ReLU = in -> in < 0 ? 0 : in;
-	DoubleFunction<Double> activationFunction;
+	public DoubleFunction<Double> activationFunction;
+	public static final DoubleFunction<Double> dReLUdx = in -> in < 0 ? 0 : 1.0;
+	public DoubleFunction<Double> derActivationFunction = dReLUdx;
 
-	public Perceptron () { this (Math.random(), Math.random(), Math.random(), Perceptron.ReLU); }
+	public Perceptron () { this (Perceptron.ReLU); }
 
-	public Perceptron (double w1, double w2, double b, DoubleFunction<Double> activationFunction) {
-		this.w1 = w1;
-		this.w2 = w2;
-		this.b = b;
+	public Perceptron (DoubleFunction<Double> activationFunction) {
+		this.w1 = Math.random();
+		this.w2 = Math.random();
+		this.b = Math.random();
 		this.activationFunction = activationFunction;
 	}
 
@@ -25,8 +33,20 @@ public class Perceptron {
 	}
 
 	public double test (double i1, double i2) {
-		double o = (i1 * w1) + (i2 * w2) + b;
-		double a = activationFunction.apply(o);
+		this.i1 = i1;
+		this.i2 = i2;
+		o = (i1 * w1) + (i2 * w2) + b;
+		a = activationFunction.apply(o);
+
+		dado = derActivationFunction.apply (o);
+		dodw1 = i1;
+		dodw2 = i2;
+		dodb = 1;
+
+		dadw1 = dado * dodw1;
+		dadw2 = dado * dodw2;
+		dadb = dado * dodb;
+
 		return a;
 	}
 }

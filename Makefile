@@ -1,8 +1,14 @@
 all: main
 
+debug: debug-main
+
 main:
-	javac -verbose -d bin/ src/org/filiuspatris/ffnet/*
+	javac org/filiuspatris/ffnet/*.java
 
+debug-main:
+	javac -verbose -g org/filiuspatris/ffnet/*.java
 
-clean:
-	rm -r bin/
+clean: clean-main
+
+clean-main:
+	rm org/filiuspatris/ffnet/*.class

@@ -1,2 +1,2 @@
 #!/bin/bash
-pushd bin; java org.filiuspatris.ffnet.Main; popd
+java org.filiuspatris.ffnet.Main
